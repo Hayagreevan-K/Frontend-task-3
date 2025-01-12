@@ -10,13 +10,16 @@
   <header>
     <h1>Recipe Book</h1>
     <input type="text" id="search-bar" placeholder="Search recipes...">
+    <div id="category-filters">
+      <button data-category="All">All</button>
+      <button data-category="Breakfast">Breakfast</button>
+      <button data-category="Lunch">Lunch</button>
+      <button data-category="Dessert">Dessert</button>
+    </div>
   </header>
 
   <main>
-    <section id="featured-recipes">
-      <h2>Featured Recipes</h2>
-      <div id="recipe-list"></div>
-    </section>
+    <section id="recipe-list"></section>
   </main>
 
   <div id="recipe-modal" class="hidden">
