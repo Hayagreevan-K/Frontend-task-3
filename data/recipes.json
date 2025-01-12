@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "Pancakes",
+    "category": "Breakfast",
+    "description": "Fluffy pancakes with syrup.",
+    "image": "images/pancakes.jpg",
+    "ingredients": ["Flour", "Milk", "Eggs", "Butter"],
+    "instructions": "Mix ingredients and cook on a skillet for 2 minutes on each side.",
+    "cookingTime": "15 minutes"
+  },
+  {
+    "id": 2,
+    "name": "Spaghetti Bolognese",
+    "category": "Lunch",
+    "description": "Classic Italian pasta dish.",
+    "image": "images/spaghetti.jpg",
+    "ingredients": ["Spaghetti", "Tomato Sauce", "Ground Beef"],
+    "instructions": "Cook spaghetti and prepare sauce. Combine and serve hot.",
+    "cookingTime": "30 minutes"
+  },
+  {
+    "id": 3,
+    "name": "Chocolate Cake",
+    "category": "Dessert",
+    "description": "Rich and moist chocolate cake.",
+    "image": "images/chocolate_cake.jpg",
+    "ingredients": ["Flour", "Cocoa Powder", "Sugar", "Eggs", "Butter"],
+    "instructions": "Bake at 350°F for 25 minutes. Cool and serve.",
+    "cookingTime": "1 hour"
+  },
+  {
+    "id": 4,
+    "name": "Caesar Salad",
+    "category": "Lunch",
+    "description": "Crisp romaine lettuce with Caesar dressing.",
+    "image": "images/caesar_salad.jpg",
+    "ingredients": ["Romaine Lettuce", "Parmesan Cheese", "Croutons", "Caesar Dressing"],
+    "instructions": "Toss lettuce, croutons, and cheese with Caesar dressing. Serve chilled.",
+    "cookingTime": "10 minutes"
+  },
+  {
+    "id": 5,
+    "name": "Fruit Smoothie",
+    "category": "Breakfast",
+    "description": "Refreshing blend of fruits and yogurt.",
+    "image": "images/fruit_smoothie.jpg",
+    "ingredients": ["Banana", "Berries", "Yogurt", "Honey"],
+    "instructions": "Blend all ingredients until smooth. Serve immediately.",
+    "cookingTime": "5 minutes"
+  },
+  {
+    "id": 6,
+    "name": "Brownies",
+    "category": "Dessert",
+    "description": "Fudgy and chocolaty brownies.",
+    "image": "images/brownies.jpg",
+    "ingredients": ["Chocolate", "Flour", "Sugar", "Eggs", "Butter"],
+    "instructions": "Bake at 350°F for 20 minutes. Let cool before slicing.",
+    "cookingTime": "40 minutes"
+  }
+]
