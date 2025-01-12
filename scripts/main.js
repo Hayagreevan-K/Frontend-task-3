@@ -1,37 +1,3 @@
-// Sample data for recipes
-const recipes = [
-  {
-    id: 1,
-    name: "Pancakes",
-    category: "Breakfast",
-    description: "Fluffy pancakes with syrup.",
-    image: "images/pancakes.jpg",
-    ingredients: ["Flour", "Milk", "Eggs", "Butter"],
-    instructions: "Mix ingredients and cook on a skillet for 2 minutes each side.",
-    cookingTime: "15 minutes"
-  },
-  {
-    id: 2,
-    name: "Spaghetti Bolognese",
-    category: "Lunch",
-    description: "Classic Italian pasta dish.",
-    image: "images/spaghetti.jpg",
-    ingredients: ["Spaghetti", "Tomato Sauce", "Ground Beef"],
-    instructions: "Cook spaghetti and prepare sauce. Combine and serve hot.",
-    cookingTime: "30 minutes"
-  },
-  {
-    id: 3,
-    name: "Chocolate Cake",
-    category: "Dessert",
-    description: "Rich and moist chocolate cake.",
-    image: "images/chocolate_cake.jpg",
-    ingredients: ["Flour", "Cocoa", "Sugar", "Eggs"],
-    instructions: "Bake at 350°F for 25 minutes. Cool and serve.",
-    cookingTime: "1 hour"
-  }
-];
-
 // Elements
 const recipeList = document.getElementById("recipe-list");
 const searchBar = document.getElementById("search-bar");
@@ -39,7 +5,7 @@ const recipeModal = document.getElementById("recipe-modal");
 const recipeDetails = document.getElementById("recipe-details");
 const closeButton = document.querySelector(".close-button");
 
-// Display recipes
+// Function to display recipes
 function displayRecipes(recipesToDisplay) {
   recipeList.innerHTML = "";
   recipesToDisplay.forEach(recipe => {
@@ -55,7 +21,7 @@ function displayRecipes(recipesToDisplay) {
   });
 }
 
-// Show recipe details
+// Function to show recipe details
 function showRecipeDetails(recipe) {
   recipeDetails.innerHTML = `
     <h2>${recipe.name}</h2>
@@ -70,31 +36,23 @@ function showRecipeDetails(recipe) {
   recipeModal.classList.remove("hidden");
 }
 
-// Close modal
+// Close modal on button click
 closeButton.addEventListener("click", () => {
   recipeModal.classList.add("hidden");
 });
 
-// Search functionality
-searchBar.addEventListener("input", e => {
-  const searchText = e.target.value.toLowerCase();
-  const filteredRecipes = recipes.filter(recipe =>
-    recipe.name.toLowerCase().includes(searchText) ||
-    recipe.ingredients.some(ingredient =>
-      ingredient.toLowerCase().includes(searchText)
-    )
-  );
-  displayRecipes(filteredRecipes);
-});
-
-// Initialize
-displayRecipes(recipes);
-
+// Fetch recipes from JSON and initialize
 fetch('data/recipes.json')
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("Failed to fetch recipes");
+    }
+    return response.json();
+  })
   .then(data => {
     displayRecipes(data);
 
+    // Search functionality
     searchBar.addEventListener("input", e => {
       const searchText = e.target.value.toLowerCase();
       const filteredRecipes = data.filter(recipe =>
@@ -106,4 +64,4 @@ fetch('data/recipes.json')
       displayRecipes(filteredRecipes);
     });
   })
-  .catch(error => console.error('Error fetching recipes:', error));
+  .catch(error => console.error("Error fetching recipes:", error));
