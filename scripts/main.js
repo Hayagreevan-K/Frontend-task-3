@@ -1,67 +1,76 @@
-// Elements
 const recipeList = document.getElementById("recipe-list");
 const searchBar = document.getElementById("search-bar");
 const recipeModal = document.getElementById("recipe-modal");
 const recipeDetails = document.getElementById("recipe-details");
 const closeButton = document.querySelector(".close-button");
+const categoryFilters = document.getElementById("category-filters");
 
-// Function to display recipes
-function displayRecipes(recipesToDisplay) {
-  recipeList.innerHTML = "";
-  recipesToDisplay.forEach(recipe => {
-    const card = document.createElement("div");
-    card.className = "recipe-card";
-    card.innerHTML = `
-      <img src="${recipe.image}" alt="${recipe.name}">
-      <h3>${recipe.name}</h3>
-      <p>${recipe.description}</p>
-    `;
-    card.addEventListener("click", () => showRecipeDetails(recipe));
-    recipeList.appendChild(card);
-  });
-}
-
-// Function to show recipe details
-function showRecipeDetails(recipe) {
-  recipeDetails.innerHTML = `
-    <h2>${recipe.name}</h2>
-    <img src="${recipe.image}" alt="${recipe.name}">
-    <p><strong>Category:</strong> ${recipe.category}</p>
-    <p><strong>Cooking Time:</strong> ${recipe.cookingTime}</p>
-    <h3>Ingredients</h3>
-    <ul>${recipe.ingredients.map(item => `<li>${item}</li>`).join("")}</ul>
-    <h3>Instructions</h3>
-    <p>${recipe.instructions}</p>
-  `;
-  recipeModal.classList.remove("hidden");
-}
-
-// Close modal on button click
-closeButton.addEventListener("click", () => {
-  recipeModal.classList.add("hidden");
-});
-
-// Fetch recipes from JSON and initialize
-fetch('data/recipes.json')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error("Failed to fetch recipes");
-    }
-    return response.json();
-  })
+// Fetch and display recipes
+fetch("data/recipes.json")
+  .then(response => response.json())
   .then(data => {
-    displayRecipes(data);
+    let recipes = data;
 
-    // Search functionality
-    searchBar.addEventListener("input", e => {
+    const renderRecipes = (filteredRecipes) => {
+      recipeList.innerHTML = "";
+      filteredRecipes.forEach(recipe => {
+        const card = document.createElement("div");
+        card.className = "recipe-card";
+        card.innerHTML = `
+          <img src="${recipe.image}" alt="${recipe.name}">
+          <h3>${recipe.name}</h3>
+          <p>${recipe.description}</p>
+        `;
+        card.addEventListener("click", () => showRecipeDetails(recipe));
+        recipeList.appendChild(card);
+      });
+    };
+
+    // Show recipe details in modal
+    const showRecipeDetails = (recipe) => {
+      recipeDetails.innerHTML = `
+        <h2>${recipe.name}</h2>
+        <img src="${recipe.image}" alt="${recipe.name}">
+        <p><strong>Category:</strong> ${recipe.category}</p>
+        <p><strong>Cooking Time:</strong> ${recipe.cookingTime}</p>
+        <h3>Ingredients</h3>
+        <ul>${recipe.ingredients.map(item => `<li>${item}</li>`).join("")}</ul>
+        <h3>Instructions</h3>
+        <p>${recipe.instructions}</p>
+      `;
+      recipeModal.classList.remove("hidden");
+    };
+
+    // Close modal
+    closeButton.addEventListener("click", () => {
+      recipeModal.classList.add("hidden");
+    });
+
+    // Filter by category
+    categoryFilters.addEventListener("click", (e) => {
+      const category = e.target.getAttribute("data-category");
+      if (category === "All") {
+        renderRecipes(recipes);
+      } else {
+        const filteredRecipes = recipes.filter(recipe => recipe.category === category);
+        renderRecipes(filteredRecipes);
+      }
+    });
+
+    // Search recipes
+    searchBar.addEventListener("input", (e) => {
       const searchText = e.target.value.toLowerCase();
-      const filteredRecipes = data.filter(recipe =>
+      const filteredRecipes = recipes.filter(recipe =>
         recipe.name.toLowerCase().includes(searchText) ||
         recipe.ingredients.some(ingredient =>
           ingredient.toLowerCase().includes(searchText)
         )
       );
-      displayRecipes(filteredRecipes);
+      renderRecipes(filteredRecipes);
     });
+
+    // Initial render
+    renderRecipes(recipes);
   })
   .catch(error => console.error("Error fetching recipes:", error));
+
