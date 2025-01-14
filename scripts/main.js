@@ -26,7 +26,6 @@ fetch("data/recipes.json")
       });
     };
 
-    // Show recipe details in modal
     const showRecipeDetails = (recipe) => {
       recipeDetails.innerHTML = `
         <h2>${recipe.name}</h2>
@@ -41,12 +40,10 @@ fetch("data/recipes.json")
       recipeModal.classList.remove("hidden");
     };
 
-    // Close modal
     closeButton.addEventListener("click", () => {
       recipeModal.classList.add("hidden");
     });
 
-    // Filter by category
     categoryFilters.addEventListener("click", (e) => {
       const category = e.target.getAttribute("data-category");
       if (category === "All") {
@@ -57,7 +54,6 @@ fetch("data/recipes.json")
       }
     });
 
-    // Search recipes
     searchBar.addEventListener("input", (e) => {
       const searchText = e.target.value.toLowerCase();
       const filteredRecipes = recipes.filter(recipe =>
@@ -69,8 +65,8 @@ fetch("data/recipes.json")
       renderRecipes(filteredRecipes);
     });
 
-    // Initial render
     renderRecipes(recipes);
   })
   .catch(error => console.error("Error fetching recipes:", error));
+
 
